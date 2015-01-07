@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxMaxim.h"
+#include "maxiGrains.h"
+
+typedef hannWinFunctor grainPlayerWin;
 
 class ofApp : public ofBaseApp{
 
@@ -21,11 +24,16 @@ public:
     void gotMessage(ofMessage msg);
     void audioRequested 	(float * input, int bufferSize, int nChannels); /* output method */
     void audioReceived 	(float * input, int bufferSize, int nChannels); /* input method */
+    float* hanning(int bufferSize);
     
     int		initialBufferSize; /* buffer size */
     int		sampleRate;
     float* myInput;
     double outputs[2];
     ofxMaxiMix mymix;
+//    maxiPitchStretch<grainPlayerWin> stretch;
+    maxiPitchStretch<grainPlayerWin> *stretch;
+    ofxMaxiSample speech;
+    float* hannedWindow;
     
 };
