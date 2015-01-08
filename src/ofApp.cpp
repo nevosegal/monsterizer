@@ -6,11 +6,17 @@ void ofApp::setup(){
     ofSetupScreen();
     ofSetVerticalSync(true);
     
+    numButtons = 4;
+    buttons = new Button[numButtons];
+    buttons[0] = *new Button(100, 40, "human");
+    buttons[1] = *new Button(180, 40, "monster");
+    buttons[2] = *new Button(260, 40, "robot");
+    buttons[3] = *new Button(340, 40, "alien");
+    buttons[0].activate();
+    
     sampleRate 			= 44100; /* Sampling Rate */
     initialBufferSize	= 512;	/* Buffer Size. you have to fill this buffer with sound*/
     myInput = new float[initialBufferSize];
-    speech.load(ofToDataPath("41252__303creative__the-air-steward.wav"));
-    stretch = new maxiPitchStretch<grainPlayerWin>(&speech);
     hannedWindow = hanning(initialBufferSize);
     ofSoundStreamSetup(2,0,this, sampleRate, initialBufferSize, 4);
 }
@@ -23,12 +29,16 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(30);
+    ofSetColor(255);
     for(int i = 0 ; i <initialBufferSize-1; i++){
         ofLine(i,ofGetHeight()/2 + 20*myInput[i]*hannedWindow[i], i+1, ofGetHeight()/2 + 20*myInput[i+1]*hannedWindow[i]);
     }
+    for(int i = 0; i < numButtons; i++){
+        buttons[i].draw();
+    }
 }
 
-void ofApp::audioRequested 	(float * output, int bufferSize, int nChannels){
+void ofApp::audioRequested(float * output, int bufferSize, int nChannels){
     float sample;
     for(int i = 0; i < bufferSize; i++){
         myInput[i] = stretch->play(0.5, 0.8, 0.1, 4, 0);
@@ -68,12 +78,20 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    for(int i = 0 ; i < numButtons; i++){
+        if(buttons[i].isInBounds(x, y)){
+            buttons[i].activate();
+            for(int j = 0 ; j < numButtons; j++){
+                if(i!=j){
+                    buttons[j].deactivate();
+                }
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------

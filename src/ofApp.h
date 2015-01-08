@@ -2,9 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxMaxim.h"
-#include "maxiGrains.h"
-
-typedef hannWinFunctor grainPlayerWin;
+#include "Button.h"
 
 class ofApp : public ofBaseApp{
 
@@ -31,9 +29,8 @@ public:
     float* myInput;
     double outputs[2];
     ofxMaxiMix mymix;
-//    maxiPitchStretch<grainPlayerWin> stretch;
-    maxiPitchStretch<grainPlayerWin> *stretch;
-    ofxMaxiSample speech;
+
     float* hannedWindow;
-    
+    Button* buttons;
+    int numButtons;
 };
