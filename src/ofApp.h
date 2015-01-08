@@ -33,4 +33,6 @@ public:
     float* hannedWindow;
     Button* buttons;
     int numButtons;
+    maxiPitchStretch<grainPlayerWin> *stretch;
+    ofxMaxiSample speech;
 };

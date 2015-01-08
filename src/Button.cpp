@@ -15,26 +15,31 @@ Button::Button(){
 Button::Button(int x, int y, string type){
     this->x = x;
     this->y = y;
-    w = 65;
+    w = 95;
     h = 30;
     this->type = type;
     active = false;
     xoffset = 12;
-    speech.load(ofToDataPath("41252__303creative__the-air-steward.wav"));
-    stretch = new maxiPitchStretch<grainPlayerWin>(&speech);
-    
+    numCycles = 4;
+    rateValue = 1;
     if(type == "robot"){
-        name = "Robot";
+        name = "Robotize!";
+        speedValue = 1.6;
+        numCycles = 8;
     }
     else if (type == "monster"){
-        name = "Monster";
+        name = "Monsterize!";
         xoffset = 5;
+        speedValue = 0.55;
     }
     else if (type == "alien"){
-        name = "Alien";
+        name = "Alienize!";
+        speedValue = 2;
+        rateValue = 3;
     }
     else {
-        name = "Human";
+        name = "Humanize!";
+        speedValue = 1;
     }
 }
 
@@ -56,10 +61,17 @@ bool Button::isInBounds(int x, int y){
     return false;
 }
 
-double Button::process(double input){
-    
+int Button::getNumCycles(){
+    return numCycles;
 }
 
+double Button::getSpeedValue(){
+    return speedValue;
+}
+
+double Button::getRateValue(){
+    return rateValue;
+}
 
 void Button::activate(){
     active = true;

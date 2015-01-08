@@ -24,7 +24,9 @@ public:
     void activate();
     void deactivate();
     bool isActivated();
-    double process(double input);
+    double getSpeedValue();
+    double getRateValue();
+    int getNumCycles();
     
     int x,y,w,h;
     bool active;
@@ -33,8 +35,8 @@ public:
     string name;
     int xoffset;
     double rateValue, speedValue;
-    maxiPitchStretch<grainPlayerWin> *stretch;
-    ofxMaxiSample speech;
+    double sample;
+    int numCycles;
 };
 
 #endif /* defined(__monsterizer__Button__) */

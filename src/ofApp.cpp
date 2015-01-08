@@ -8,11 +8,14 @@ void ofApp::setup(){
     
     numButtons = 4;
     buttons = new Button[numButtons];
-    buttons[0] = *new Button(100, 40, "human");
-    buttons[1] = *new Button(180, 40, "monster");
+    buttons[0] = *new Button(40, 40, "human");
+    buttons[1] = *new Button(150, 40, "monster");
     buttons[2] = *new Button(260, 40, "robot");
-    buttons[3] = *new Button(340, 40, "alien");
+    buttons[3] = *new Button(370, 40, "alien");
     buttons[0].activate();
+    
+    speech.load(ofToDataPath("41252__303creative__the-air-steward.wav"));
+    stretch = new maxiPitchStretch<grainPlayerWin>(&speech);
     
     sampleRate 			= 44100; /* Sampling Rate */
     initialBufferSize	= 512;	/* Buffer Size. you have to fill this buffer with sound*/
@@ -31,7 +34,7 @@ void ofApp::draw(){
     ofBackground(30);
     ofSetColor(255);
     for(int i = 0 ; i <initialBufferSize-1; i++){
-        ofLine(i,ofGetHeight()/2 + 20*myInput[i]*hannedWindow[i], i+1, ofGetHeight()/2 + 20*myInput[i+1]*hannedWindow[i]);
+        ofLine(i,ofGetHeight()/2 + 30*myInput[i]*hannedWindow[i], i+1, ofGetHeight()/2 + 30*myInput[i+1]*hannedWindow[i]);
     }
     for(int i = 0; i < numButtons; i++){
         buttons[i].draw();
@@ -39,9 +42,13 @@ void ofApp::draw(){
 }
 
 void ofApp::audioRequested(float * output, int bufferSize, int nChannels){
-    float sample;
     for(int i = 0; i < bufferSize; i++){
-        myInput[i] = stretch->play(0.5, 0.8, 0.1, 4, 0);
+        for(int j = 0; j < numButtons; j++){
+            if(buttons[j].isActivated()){
+                myInput[i] = stretch->play(buttons[j].getSpeedValue(), buttons[j].getRateValue(), 0.1, buttons[j].getNumCycles(), 0);
+                break;
+            }
+        }
         mymix.stereo(myInput[i], outputs, 0.5);
         output[i*nChannels] = outputs[0];
         output[i*nChannels+1] = outputs[1];
