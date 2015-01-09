@@ -16,9 +16,12 @@
 typedef hannWinFunctor grainPlayerWin;
 class Button{
 public:
+    
+    //constructors
     Button();
     Button(int x,int y, string type);
     
+    //class methods
     void draw();
     bool isInBounds(int x, int y);
     void activate();
@@ -28,6 +31,7 @@ public:
     double getRateValue();
     int getNumCycles();
     
+    //class variables.
     int x,y,w,h;
     bool active;
     string type;
@@ -35,7 +39,6 @@ public:
     string name;
     int xoffset;
     double rateValue, speedValue;
-    double sample;
     int numCycles;
 };
 

@@ -13,6 +13,8 @@ Button::Button(){
 }
 
 Button::Button(int x, int y, string type){
+    
+    //initial stuff
     this->x = x;
     this->y = y;
     w = 95;
@@ -22,6 +24,8 @@ Button::Button(int x, int y, string type){
     xoffset = 12;
     numCycles = 4;
     rateValue = 1;
+    
+    //set some variables according to the type.
     if(type == "robot"){
         name = "Robotize!";
         speedValue = 1.6;
@@ -43,17 +47,22 @@ Button::Button(int x, int y, string type){
     }
 }
 
+//drawing the buttons
 void Button::draw(){
     ofNoFill();
+    
+    //changing the color of button is active
     if(active){
         ofSetColor(220);
-    }else{
+    }
+    else{
         ofSetColor(80);
     }
     ofRectRounded(x,y,w,h,3);
     ofDrawBitmapString(name,x+xoffset,y+18);
 }
 
+//checking if the button is hovered.
 bool Button::isInBounds(int x, int y){
     if(x > this->x && x < this->x+w && y > this->y && y < this->y + h){
         return true;
@@ -61,6 +70,7 @@ bool Button::isInBounds(int x, int y){
     return false;
 }
 
+//getters
 int Button::getNumCycles(){
     return numCycles;
 }
@@ -73,14 +83,17 @@ double Button::getRateValue(){
     return rateValue;
 }
 
+//activate the button
 void Button::activate(){
     active = true;
 }
 
+//deactivate the button
 void Button::deactivate(){
     active = false;
 }
 
+//check if the button is activated
 bool Button::isActivated(){
     return active;
 }
